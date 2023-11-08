@@ -1,9 +1,6 @@
 package com.employeemanagementsystem.emsbackend.controller;
 
 import com.employeemanagementsystem.emsbackend.dto.DepartmentDto;
-import com.employeemanagementsystem.emsbackend.dto.EmployeeDto;
-import com.employeemanagementsystem.emsbackend.entity.Department;
-import com.employeemanagementsystem.emsbackend.mapper.DepartmentMapper;
 import com.employeemanagementsystem.emsbackend.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

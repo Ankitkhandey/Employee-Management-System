@@ -1,7 +1,6 @@
 package com.employeemanagementsystem.emsbackend.service.Impl;
 
 import com.employeemanagementsystem.emsbackend.dto.DepartmentDto;
-import com.employeemanagementsystem.emsbackend.dto.EmployeeDto;
 import com.employeemanagementsystem.emsbackend.entity.Department;
 import com.employeemanagementsystem.emsbackend.exception.ResourceNotFoundException;
 import com.employeemanagementsystem.emsbackend.mapper.DepartmentMapper;
