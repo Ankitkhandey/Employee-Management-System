@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -27,14 +28,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto getDepartmentById(Long departmentId) {
         Department department= departmentRepository.findById(departmentId)
-                .orElseThrow( () -> new ResourceNotFoundException("Department with Id: "+departmentId+" does not exist"));
+                .orElseThrow( () -> new ResourceNotFoundException("Department with Id: "+ departmentId +" does not exist"));
 
         return DepartmentMapper.mapToDepartmentDto(department);
     }
 
     @Override
     public List<DepartmentDto> getAllDepartment() {
-        return null;
+        List<Department> allEmployee = departmentRepository.findAll();
+        return allEmployee
+                .stream()
+                .map((department)-> DepartmentMapper.mapToDepartmentDto(department))
+                .collect(Collectors.toList());
     }
 
     @Override
