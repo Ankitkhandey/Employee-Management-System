@@ -27,7 +27,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto getDepartmentById(Long departmentId) {
         Department department= departmentRepository.findById(departmentId)
-                .orElseThrow( () -> new ResourceNotFoundException("Department with Id: "+ departmentId +" does not exist"));
+                .orElseThrow( () -> new ResourceNotFoundException("Department with Id: "+ departmentId +" does not exist")
+                );
 
         return DepartmentMapper.mapToDepartmentDto(department);
     }
@@ -42,12 +43,21 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto updateDepartment(Long departmentId) {
-        return null;
+    public DepartmentDto updateDepartment(Long departmentId, DepartmentDto updateDepartmentDto) {
+        Department department= departmentRepository.findById(departmentId)
+                .orElseThrow(()-> new ResourceNotFoundException("Department with Id: "+ departmentId +" does not exist")
+                );
+        department.setDepartmentName(updateDepartmentDto.getDepartmentName());
+        department.setDepartmentDescription(updateDepartmentDto.getDepartmentDescription());
+        Department savedDepartment= departmentRepository.save(department);
+        return DepartmentMapper.mapToDepartmentDto(savedDepartment);
     }
 
     @Override
-    public DepartmentDto deleteDepartment(Long departmentId) {
-        return null;
+    public void deleteDepartment(Long departmentId) {
+        Department department= departmentRepository.findById(departmentId)
+                .orElseThrow( () -> new ResourceNotFoundException("Department with Id: "+ departmentId +" does not exist")
+                );
+        departmentRepository.deleteById(departmentId);
     }
 }
