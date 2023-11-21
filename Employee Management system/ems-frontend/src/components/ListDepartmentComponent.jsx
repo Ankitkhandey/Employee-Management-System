@@ -1,29 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAllDepartments } from '../services/DepartmentService';
+import { Link } from 'react-router-dom';
 
 const ListDepartmentComponent = () => {
-  const dummyData=[
-    {
-        "id":"1",
-        "departmentName": "R&D",
-        "departmentDescription":"Research and development"
-    },
-    {
-        "id":"2",
-        "departmentName": "IT",
-        "departmentDescription":"Information Technology"
-    },
-    {
-        "id":"3",
-        "departmentName": "Finance",
-        "departmentDescription":"manages fianances"        
-    }
-  ];
   
-  const[departments, setDepartments]=useState(dummyData);
+  const[departments, setDepartments]=useState([]);
+
+  useEffect(()=>{
+    getAllDepartments().then((response)=>{
+      console.log(response.data);
+      setDepartments(response.data);
+    }).catch((err)=> {
+      console.error(err)
+    });
+  },[])
 
   return (
     <div className='container'>
       <h2 className='text-center'>List of Departments</h2>
+      <Link to='/add-department' className='btn btn-primary mb-2'>Add Department</Link>
       <table className='table table-striped table-bordered'>
         <thead>
             <tr>
