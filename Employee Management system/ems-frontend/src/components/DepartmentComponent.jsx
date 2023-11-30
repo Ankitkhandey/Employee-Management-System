@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { createDepartment } from '../services/DepartmentService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const DepartmentComponent = () => {
 
     const [departmentName, setDepartmentName]=useState('');
     const [departmentDescription, setDepartmentDescription]= useState('');
 
     const navigator= useNavigate();
+    const {id} = useParams();
 
     function saveDepartment(e){
         e.preventDefault();
@@ -16,12 +17,21 @@ const DepartmentComponent = () => {
             navigator('/departments');
         }).catch((err)=>console.error(err));
     }
+
+    function pageTitle(){
+        if(id){
+            return <h2 className='text-center'>Update Department</h2>
+        } else {
+            return <h2 className='text-center'>Add Department</h2>
+        }
+    }
     return (
     <div className='container'> <br/><br/>
     <div className='row'>
         <div className='card col-md-6 offset-md-3 offset-md-3'>
-            <h2 className='text-center'>Add Department</h2>
-
+            {
+                pageTitle()
+            }
             <div className='card-body'>
                 <form>
                     <div className='form-group mb-2'>
