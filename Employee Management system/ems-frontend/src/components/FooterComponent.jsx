@@ -4,7 +4,7 @@ const FooterComponent = () => {
   return (
     <div>
         <footer className='footer'>
-            <span>All rights reserved 2023 by javaguides</span>
+            <span>Email - ankitkhandey123@gmail.com</span>
         </footer>
 
     </div>

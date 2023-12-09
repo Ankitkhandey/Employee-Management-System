@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createDepartment } from '../services/DepartmentService';
+import React, { useEffect, useState } from 'react'
+import { createDepartment, getDepartmentById, updateDepartment } from '../services/DepartmentService';
 import { useNavigate, useParams } from 'react-router-dom';
 const DepartmentComponent = () => {
 
@@ -9,13 +9,32 @@ const DepartmentComponent = () => {
     const navigator= useNavigate();
     const {id} = useParams();
 
-    function saveDepartment(e){
+    useEffect(()=>{
+        getDepartmentById(id).then((response)=>{
+            setDepartmentName(response.data.departmentName);
+            setDepartmentDescription(response.data.departmentDescription);
+        }).catch((err)=>
+         console.error(err));
+    },[id]);
+
+    function saveOrUpdateDepartment(e){
         e.preventDefault();
         const department={departmentName,departmentDescription};
+
+        if(id){
+            updateDepartment(id, department).then((response)=>{
+                console.log(response.data);
+                navigator('/departments');
+            }).catch((errorMessage)=>{
+                console.error(errorMessage);
+            })
+        }else {
         createDepartment(department).then((response)=>{
             console.log(response.data);
             navigator('/departments');
         }).catch((err)=>console.error(err));
+        }
+
     }
 
     function pageTitle(){
@@ -59,7 +78,7 @@ const DepartmentComponent = () => {
                         >
                         </input>
                     </div>
-                    <button className='btn btn-success mb-2' onClick={(e)=>saveDepartment(e)}>Submit</button>
+                    <button className='btn btn-success mb-2' onClick={(e)=>saveOrUpdateDepartment(e)}>Submit</button>
                 </form>
 
             </div>
